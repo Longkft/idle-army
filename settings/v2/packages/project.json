@@ -4,5 +4,22 @@
       "width": 1080,
       "height": 1920
     }
+  },
+  "physics": {
+    "collisionMatrix": {
+      "0": 0,
+      "1": 4,
+      "2": 2
+    },
+    "collisionGroups": [
+      {
+        "index": 1,
+        "name": "item"
+      },
+      {
+        "index": 2,
+        "name": "block"
+      }
+    ]
   }
 }

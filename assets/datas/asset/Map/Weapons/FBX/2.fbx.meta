@@ -75,6 +75,89 @@
       "scenes": [
         "d0a4117d-8f42-4c44-aeb0-de52f06691d5@30b18"
       ]
+    },
+    "materials": {
+      "d0a4117d-8f42-4c44-aeb0-de52f06691d5@85a98": {
+        "__type__": "cc.Material",
+        "_name": "",
+        "_objFlags": 0,
+        "_native": "",
+        "_effectAsset": {
+          "__uuid__": "f648964e-8d32-41fc-9ac9-7a1e714dd17b",
+          "__expectedType__": "cc.EffectAsset"
+        },
+        "_techIdx": 0,
+        "_defines": [
+          {
+            "DCC_APP_NAME": 2,
+            "USE_ALBEDO_MAP": true
+          },
+          {},
+          {}
+        ],
+        "_states": [
+          {
+            "rasterizerState": {},
+            "depthStencilState": {},
+            "blendState": {
+              "targets": [
+                {}
+              ]
+            }
+          },
+          {
+            "rasterizerState": {},
+            "depthStencilState": {},
+            "blendState": {
+              "targets": [
+                {}
+              ]
+            }
+          },
+          {
+            "rasterizerState": {},
+            "depthStencilState": {},
+            "blendState": {
+              "targets": [
+                {}
+              ]
+            }
+          }
+        ],
+        "_props": [
+          {
+            "mainTexture": {
+              "__uuid__": "a9cf8eee-1490-4a1b-94b4-c038371076c8@6c48a",
+              "__expectedType__": "cc.Texture2D"
+            },
+            "mainColor": {
+              "__type__": "cc.Color",
+              "r": 204,
+              "g": 204,
+              "b": 204,
+              "a": 255
+            },
+            "emissiveMap": {
+              "__uuid__": "8a0098bd-bea1-426b-9634-a9af85f21ae1@6c48a",
+              "__expectedType__": "cc.Texture2D"
+            },
+            "shininessExponent": 0,
+            "specularFactor": 0.25,
+            "transparencyMap": {
+              "__uuid__": "8a0098bd-bea1-426b-9634-a9af85f21ae1@6c48a",
+              "__expectedType__": "cc.Texture2D"
+            },
+            "transparencyFactor": 0,
+            "normalStrength": 0.455,
+            "normalMap": {
+              "__uuid__": "8a0098bd-bea1-426b-9634-a9af85f21ae1@6c48a",
+              "__expectedType__": "cc.Texture2D"
+            }
+          },
+          {},
+          {}
+        ]
+      }
     }
   }
 }
