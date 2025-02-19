@@ -1,0 +1,110 @@
+{
+  "ver": "2.3.0",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "53497027-4a3c-4165-a502-e3b15b5b5bf4",
+  "files": [],
+  "subMetas": {
+    "65559": {
+      "importer": "gltf-mesh",
+      "uuid": "53497027-4a3c-4165-a502-e3b15b5b5bf4@65559",
+      "displayName": "",
+      "id": "65559",
+      "name": "Cube.021.mesh",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.1.0",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "7d6ab": {
+      "importer": "texture",
+      "uuid": "53497027-4a3c-4165-a502-e3b15b5b5bf4@7d6ab",
+      "displayName": "",
+      "id": "7d6ab",
+      "name": "base_color_texture.texture",
+      "userData": {
+        "wrapModeS": "repeat",
+        "wrapModeT": "repeat",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0,
+        "isUuid": false,
+        "imageUuidOrDatabaseUri": "db://assets/datas/asset/Map/Weapons/FBX/Texture_Map 1-2.png"
+      },
+      "ver": "1.0.22",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "3ca4b": {
+      "importer": "gltf-material",
+      "uuid": "53497027-4a3c-4165-a502-e3b15b5b5bf4@3ca4b",
+      "displayName": "",
+      "id": "3ca4b",
+      "name": "Material.008.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "e1752": {
+      "importer": "gltf-scene",
+      "uuid": "53497027-4a3c-4165-a502-e3b15b5b5bf4@e1752",
+      "displayName": "",
+      "id": "e1752",
+      "name": "3.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [
+      {
+        "name": "base_color_texture",
+        "uri": "db://assets/datas/asset/Map/Weapons/FBX/Texture_Map 1-2.png"
+      }
+    ],
+    "legacyFbxImporter": false,
+    "allowMeshDataAccess": true,
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "redirect": "53497027-4a3c-4165-a502-e3b15b5b5bf4@e1752",
+    "assetFinder": {
+      "meshes": [
+        "53497027-4a3c-4165-a502-e3b15b5b5bf4@65559"
+      ],
+      "skeletons": [],
+      "textures": [
+        "53497027-4a3c-4165-a502-e3b15b5b5bf4@7d6ab"
+      ],
+      "materials": [
+        "53497027-4a3c-4165-a502-e3b15b5b5bf4@3ca4b"
+      ],
+      "scenes": [
+        "53497027-4a3c-4165-a502-e3b15b5b5bf4@e1752"
+      ]
+    }
+  }
+}

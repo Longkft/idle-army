@@ -1,0 +1,169 @@
+{
+  "ver": "2.3.0",
+  "importer": "fbx",
+  "imported": true,
+  "uuid": "b4cff139-f7de-409a-a258-c3cf0f222ed8",
+  "files": [
+    "__original-animation-0.cconb"
+  ],
+  "subMetas": {
+    "c6e33": {
+      "importer": "gltf-mesh",
+      "uuid": "b4cff139-f7de-409a-a258-c3cf0f222ed8@c6e33",
+      "displayName": "",
+      "id": "c6e33",
+      "name": "Cube.002.mesh",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.1.0",
+      "imported": true,
+      "files": [
+        ".bin",
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "bf318": {
+      "importer": "gltf-animation",
+      "uuid": "b4cff139-f7de-409a-a258-c3cf0f222ed8@bf318",
+      "displayName": "",
+      "id": "bf318",
+      "name": "Hop mo khoa.animation",
+      "userData": {
+        "gltfIndex": 0,
+        "wrapMode": 2,
+        "sample": 30,
+        "span": {
+          "from": 0,
+          "to": 1
+        },
+        "events": []
+      },
+      "ver": "1.0.16",
+      "imported": true,
+      "files": [
+        ".cconb"
+      ],
+      "subMetas": {}
+    },
+    "438fe": {
+      "importer": "gltf-skeleton",
+      "uuid": "b4cff139-f7de-409a-a258-c3cf0f222ed8@438fe",
+      "displayName": "",
+      "id": "438fe",
+      "name": "UnnamedSkeleton.skeleton",
+      "userData": {
+        "gltfIndex": 0,
+        "jointsLength": 3
+      },
+      "ver": "1.0.1",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "7d6ab": {
+      "importer": "texture",
+      "uuid": "b4cff139-f7de-409a-a258-c3cf0f222ed8@7d6ab",
+      "displayName": "",
+      "id": "7d6ab",
+      "name": "base_color_texture.texture",
+      "userData": {
+        "wrapModeS": "repeat",
+        "wrapModeT": "repeat",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0,
+        "isUuid": false,
+        "imageUuidOrDatabaseUri": "db://assets/datas/asset/Map/Model/Hop mo khoa/Textures/Hop mo khoa nhan vien.png"
+      },
+      "ver": "1.0.22",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "a8b8b": {
+      "importer": "gltf-material",
+      "uuid": "b4cff139-f7de-409a-a258-c3cf0f222ed8@a8b8b",
+      "displayName": "",
+      "id": "a8b8b",
+      "name": "Hop mo khoa nv.material",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.14",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "4563c": {
+      "importer": "gltf-scene",
+      "uuid": "b4cff139-f7de-409a-a258-c3cf0f222ed8@4563c",
+      "displayName": "",
+      "id": "4563c",
+      "name": "Hop mo khoa.prefab",
+      "userData": {
+        "gltfIndex": 0
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "imageMetas": [
+      {
+        "name": "base_color_texture",
+        "uri": "db://assets/datas/asset/Map/Model/Hop mo khoa/Textures/Hop mo khoa nhan vien.png"
+      }
+    ],
+    "legacyFbxImporter": false,
+    "allowMeshDataAccess": true,
+    "fbx": {
+      "smartMaterialEnabled": true
+    },
+    "animationImportSettings": [
+      {
+        "name": "Hop mo khoa",
+        "duration": 1,
+        "fps": 30,
+        "splits": [
+          {
+            "name": "Hop mo khoa",
+            "from": 0,
+            "to": 1,
+            "wrapMode": 2
+          }
+        ]
+      }
+    ],
+    "redirect": "b4cff139-f7de-409a-a258-c3cf0f222ed8@4563c",
+    "assetFinder": {
+      "meshes": [
+        "b4cff139-f7de-409a-a258-c3cf0f222ed8@c6e33"
+      ],
+      "skeletons": [
+        "b4cff139-f7de-409a-a258-c3cf0f222ed8@438fe"
+      ],
+      "textures": [
+        "b4cff139-f7de-409a-a258-c3cf0f222ed8@7d6ab"
+      ],
+      "materials": [
+        "b4cff139-f7de-409a-a258-c3cf0f222ed8@a8b8b"
+      ],
+      "scenes": [
+        "b4cff139-f7de-409a-a258-c3cf0f222ed8@4563c"
+      ]
+    }
+  }
+}
