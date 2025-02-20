@@ -1,4 +1,6 @@
-import { _decorator, Camera, Component, geometry, log, Node, PhysicsSystem } from 'cc';
+import { _decorator, Camera, Component, error, geometry, log, Node, PhysicsSystem } from 'cc';
+import { Req } from '../Req';
+import { Status } from '../Status';
 const { ccclass, property } = _decorator;
 
 @ccclass('Main2D')
@@ -33,7 +35,6 @@ export class Main2D extends Component {
     }
 
     onTouchStart(event) {
-        log(1)
         const touches = event.getAllTouches();
 
         const camera = this.CamMain.getComponent(Camera);
@@ -45,24 +46,38 @@ export class Main2D extends Component {
         const maxDistance = 10000000;
         const queryTrigger = true;
         const bResult = PhysicsSystem.instance.raycastClosest(ray, mask, maxDistance, queryTrigger);
-        log(333)
         if (bResult) {
-            log('bResult')
             const results = PhysicsSystem.instance.raycastResults; // Lấy kết quả raycast
 
             const raycastClosestResult = PhysicsSystem.instance.raycastClosestResult; // Lấy kết quả va chạm gần nhất
 
             const collider = raycastClosestResult.collider;
-            log('collider.node: ', collider.node)
-            if (collider.node) {
-                //     log('collider.node: ', collider.node)
-                //     if (this.checkCollider(collider.node)) {
 
-                //         log(collider.node.name)
-                //         return;
-                //     }
+            if (collider.node) {
+
+                // unLock function order gun
+                if (!collider.node.getComponent(Status).isBox) {
+                    if (!Req.instance.isGun) {
+                        Req.instance.isGun = true;
+                    }
+
+                    this.setDataGun(collider.node.name);
+                }
             }
         }
+    }
+
+    setDataGun(name: string) {
+        const numberToAdd = Number(name);
+
+        if (Req.instance.listDataGun.indexOf(numberToAdd) === -1) {
+            Req.instance.listDataGun.push(numberToAdd);
+            log(`Đã thêm ${numberToAdd} vào listDataGun`);
+        } else {
+            error(`${numberToAdd} đã tồn tại trong listDataGun. Không thêm lại.`);
+        }
+
+        log("listDataGun hiện tại:", Req.instance.listDataGun);
     }
 
     update(deltaTime: number) {
