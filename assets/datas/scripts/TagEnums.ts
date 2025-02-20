@@ -37,3 +37,20 @@ export enum MonsterClip {
     STUN = 12,
 }
 
+export enum StaffClip {
+    COMBO = 0,
+    POSE = 1,
+    ATTACK = 2,
+    BIATTACK = 3,
+    DAOMO = 4,
+    IDLE = 5,
+    IDLETRENXE = 6,
+    JUMPBACK = 7,
+    JUMPFORWARD = 8,
+    MOVE = 9,
+    BEDO = 10,
+    STUN = 11,
+    MANUFACETURE = 12,
+    NHAYXUONG = 13,
+}
+

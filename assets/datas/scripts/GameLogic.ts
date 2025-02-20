@@ -1,6 +1,7 @@
 import { _decorator, AudioClip, Component, log, Node, SkeletalAnimation, tween, Vec3 } from 'cc';
 import { Req } from './Req';
-import { CustomerClip, MonsterClip } from './TagEnums';
+import { CustomerClip, MonsterClip, StaffClip } from './TagEnums';
+import { Main2D } from './2D/Main2D';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameLogic')
@@ -12,6 +13,12 @@ export class GameLogic extends Component {
     mapObj: Node = null;
     @property({ type: Node })
     monster: Node = null;
+    @property({ type: Node })
+    staff: Node = null;
+    @property({ type: Node })
+    nodeMain2D: Node = null;
+    main2D: any; // node main2D chứa component 2D
+    gun: any = null; // node hộp súng
 
     @property({ type: Node })
     customers: Node[] = [];
@@ -22,16 +29,26 @@ export class GameLogic extends Component {
     @property({ type: AudioClip })
     musics: AudioClip[] = [];
 
+    initPositionStaff: Vec3 = null;
     availablePositions: Vec3[] = []; // Khởi tạo mảng vị trí có sẵn
     private currentCustomerIndex: number = 0;
     private customersAtPositions: Node[] = []; // Mảng mới để lưu trữ customers đã đến vị trí
 
+    protected onLoad(): void {
+        this.main2D = this.nodeMain2D.getComponent(Main2D);
+
+        this.initPositionStaff = this.staff.worldPosition.clone();
+    }
+
     start() {
         this.GameInit();
+
+        Req.instance.setAnimation(this.staff, StaffClip.BEDO, true);
     }
 
     update(deltaTime: number) {
 
+        this.checkGunIsCustom();
     }
 
     GameInit() {
@@ -91,8 +108,37 @@ export class GameLogic extends Component {
 
     checkGunIsCustom() {
         if (Req.instance.isGun) {
+            if(Req.instance.lifeCycle){
 
+                Req.instance.dataGunFocus = this.main2D.setRandomDataGun(); // lấy ramdom data của 1 loại súng
+                this.setBoxGun();
+                this.tweenStaffOrderGun();
+            }   
         }
+    }
+
+    setBoxGun(){
+        switch (Req.instance.dataGunFocus) {
+            case 2:{
+                this.gun = this.mapObj.getChildByName('Pistol');
+            }
+                break;
+            case 3:{
+                this.gun = this.mapObj.getChildByName('Rifle');
+            }
+                break;
+        }
+    }
+
+    tweenStaffOrderGun(){
+        let posBoxGun = this.gun.worldPosition.clone();
+        Req.instance.setAnimation(this.staff, StaffClip.MOVE, true);
+        // let eff = tween(this.staff)
+        // .to(0.5, {position: posBoxGun})
+        // .call(()=>{
+        //     eff.stop();
+        // })
+        // .start();
     }
 }
 

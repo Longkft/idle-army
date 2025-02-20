@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, view, log, sp, find, AudioSource, AudioClip, SkeletalAnimation } from 'cc';
+import { _decorator, Component, Node, view, log, sp, find, AudioSource, AudioClip, SkeletalAnimation, AnimationComponent } from 'cc';
 import { CustomerClip } from './TagEnums';
 const { ccclass, property } = _decorator;
 
@@ -21,6 +21,7 @@ export class Req extends Component {
     isGun: boolean = false;
     listDataGun: number[] = [];
     dataGunFocus: number = 0;
+    lifeCycle: boolean = false; // 1 vòng lấy súng và đưa súng
 
     nodeGame: Node;
     done: boolean = false;
@@ -102,23 +103,31 @@ export class Req extends Component {
             console.error("Skeleton component not found on the node");
             return;
         }
-
+    
         let clips = skeletalAnimation.clips;
-
-        skeletalAnimation.defaultClip = clips[tagNumber];
-
-        skeletalAnimation.play();
-
-        if (loop) {
-            skeletalAnimation.node.on(AudioSource.EventType.ENDED, () => {
-                // Bắt đầu phát lại
-                skeletalAnimation.play();
-            }, this)
-        } else {
-            if (callback) {
-                callback();
-            }
+        if (!clips[tagNumber]) {
+            console.error(`Animation clip with tag ${tagNumber} not found`);
+            return;
         }
+    
+        skeletalAnimation.defaultClip = clips[tagNumber];
+    
+        // Xóa tất cả các listener cũ để tránh trùng lặp
+        skeletalAnimation.off(AnimationComponent.EventType.FINISHED);
+    
+        if (loop) {
+            // Thêm listener cho sự kiện FINISHED
+            skeletalAnimation.on(AnimationComponent.EventType.FINISHED, () => {
+                log('loop')
+                console.log('Animation finished, playing again');
+                skeletalAnimation.play();
+            }, this);
+        } else if (callback) {
+            callback();
+        }
+    
+        // Bắt đầu phát animation
+        skeletalAnimation.play();
     }
 }
 
