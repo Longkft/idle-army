@@ -8,7 +8,7 @@ export class Main3D extends Component {
     }
 
     update(deltaTime: number) {
-        
+
     }
 }
 

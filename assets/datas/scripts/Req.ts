@@ -103,18 +103,15 @@ export class Req extends Component {
             console.error("Skeleton component not found on the node");
             return;
         }
-    
+
         let clips = skeletalAnimation.clips;
         if (!clips[tagNumber]) {
             console.error(`Animation clip with tag ${tagNumber} not found`);
             return;
         }
-    
+
         skeletalAnimation.defaultClip = clips[tagNumber];
-    
-        // Xóa tất cả các listener cũ để tránh trùng lặp
-        skeletalAnimation.off(AnimationComponent.EventType.FINISHED);
-    
+
         if (loop) {
             // Thêm listener cho sự kiện FINISHED
             skeletalAnimation.on(AnimationComponent.EventType.FINISHED, () => {
@@ -122,10 +119,12 @@ export class Req extends Component {
                 console.log('Animation finished, playing again');
                 skeletalAnimation.play();
             }, this);
-        } else if (callback) {
-            callback();
+        } else {
+            if (callback) {
+                callback();
+            }
         }
-    
+
         // Bắt đầu phát animation
         skeletalAnimation.play();
     }

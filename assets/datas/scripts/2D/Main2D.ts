@@ -61,29 +61,30 @@ export class Main2D extends Component {
                 let nodeFocus = collider.node;
                 // unLock function order gun
                 if (!collider.node.getComponent(Status).isBox) {
-                    this.setDataGun(name);
 
-                    this.unLockBoxGun(nodeFocus);
+                    this.setDataGun(name); // add data gun vào listGun
+
+                    this.unLockBoxGun(nodeFocus); // mở thùng
                 }
             }
         }
     }
 
     gun: any = null;
-    unLockBoxGun(node: Node){
+    unLockBoxGun(node: Node) {
         let name = node.name;
 
         this.tweenBoxLock(node);
-        
+
         switch (name) {
-            case '2':{
+            case '2': {
                 this.gun = this.gameLogic.mapObj.getChildByName('Pistol');
             }
-            break;
-            case '3':{
+                break;
+            case '3': {
                 this.gun = this.gameLogic.mapObj.getChildByName('Rifle');
             }
-            break;
+                break;
         }
 
         log('this.gun: ', this.gun)
@@ -91,33 +92,35 @@ export class Main2D extends Component {
         this.tweenBoxGunUnlock(this.gun);
     }
 
-    tweenBoxLock(node: Node){
+    tweenBoxLock(node: Node) { // mất thùng
         let eff = tween(node)
-        .to(0.2, {scale: new Vec3(0,0,0)})
-        .call(()=>{
-            eff.stop();
-        })
-        .start()
+            .to(0.2, { scale: new Vec3(0, 0, 0) })
+            .call(() => {
+                eff.stop();
+            })
+            .start()
     }
 
-    tweenBoxGunUnlock(node: Node){
+    tweenBoxGunUnlock(node: Node) { // hiện chỗ order súng
         node.active = true;
         let scaleDefault = node.scale.clone();
         let eff = tween(node)
-        .to(0.3, {scale: new Vec3(1.2,1.2,1.2)})
-        .to(0.1, {scale: scaleDefault})
-        .call(()=>{
-            eff.stop();
+            .to(0.3, { scale: new Vec3(1.2, 1.2, 1.2) })
+            .to(0.1, { scale: scaleDefault })
+            .call(() => {
+                eff.stop();
 
-            if (!Req.instance.isGun) {
-                Req.instance.isGun = true;
-                Req.instance.lifeCycle = true;
-            }
-        })
-        .start()
+                if (!Req.instance.isGun) {
+                    Req.instance.isGun = true;
+                    Req.instance.lifeCycle = true;
+                }
+
+                this.gameLogic.checkGunIsCustom();
+            })
+            .start()
     }
 
-    setDataGun(name: string) {
+    setDataGun(name: string) { // add data súng vào array
         const numberToAdd = Number(name);
 
         if (Req.instance.listDataGun.indexOf(numberToAdd) === -1) {
@@ -130,15 +133,15 @@ export class Main2D extends Component {
         log("listDataGun hiện tại:", Req.instance.listDataGun);
     }
 
-    setRandomDataGun(): number {
+    setRandomDataGun(): number { // đanom data súng
         if (Req.instance.listDataGun.length === 0) {
             error("listDataGun trống. Không thể chọn giá trị ngẫu nhiên.");
             return -1; // hoặc một giá trị khác để chỉ ra rằng không có giá trị nào được chọn
         }
-    
+
         const randomIndex = Math.floor(Math.random() * Req.instance.listDataGun.length);
         const randomValue = Req.instance.listDataGun[randomIndex];
-    
+
         log(`Giá trị ngẫu nhiên được chọn: ${randomValue}`);
         return randomValue;
     }
