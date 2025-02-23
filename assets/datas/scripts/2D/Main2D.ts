@@ -14,6 +14,8 @@ export class Main2D extends Component {
     @property({ type: GameLogic })
     gameLogic: GameLogic = null;
 
+    isFirstOnBoxGun: boolean = false; // lần đầu mở box
+
     onLoad() {
 
     }
@@ -115,7 +117,10 @@ export class Main2D extends Component {
                     Req.instance.lifeCycle = true;
                 }
 
-                this.gameLogic.checkGunIsCustom();
+                if(!this.isFirstOnBoxGun){
+                    this.isFirstOnBoxGun = true
+                    this.gameLogic.checkGunIsCustom();
+                }
             })
             .start()
     }
