@@ -528,8 +528,6 @@ export class GameLogic extends Component {
         // this.setUpdateLookAt(this.cam3D, hp); // hp hướng về cam
     }
 
-
-
     // customer tấn công monster
     customerAttackMonter(anim: any) {
         let customer = this.dataCustomAttack.customerAttack;

@@ -2,35 +2,35 @@
   "ver": "1.0.2",
   "importer": "particle",
   "imported": true,
-  "uuid": "aff025cf-a270-475e-aa5e-82122eb6adf1",
+  "uuid": "9d3c8c9d-b351-4059-81b4-d9a2d1a34d13",
   "files": [
     ".json",
     ".plist"
   ],
   "subMetas": {},
   "userData": {
-    "totalParticles": 200,
+    "totalParticles": 10,
     "life": 0.20000000298023224,
     "lifeVar": 0.5,
-    "emissionRate": 999.999985098839,
+    "emissionRate": 1000,
     "duration": -1,
     "srcBlendFactor": 2,
     "dstBlendFactor": 1,
     "startColor": {
-      "_val": 2740373706
+      "_val": 4294967295
     },
     "startColorVar": {
-      "_val": 3333292005
+      "_val": 4278190080
     },
     "endColor": {
-      "_val": 3591610797
+      "_val": 4278190080
     },
     "endColorVar": {
-      "_val": 3170498923
+      "_val": 4278190080
     },
-    "startSize": 3.369999885559082,
-    "startSizeVar": 50,
-    "endSize": 30.31999969482422,
+    "startSize": 0,
+    "startSizeVar": 0,
+    "endSize": 3,
     "endSizeVar": 0,
     "positionType": 0,
     "sourcePos": {
@@ -38,26 +38,26 @@
       "y": 0
     },
     "posVar": {
-      "x": 7,
-      "y": 7
+      "x": 0.5,
+      "y": 0.5
     },
-    "angle": 360,
-    "angleVar": 360,
-    "startSpin": -47.369998931884766,
+    "angle": 0,
+    "angleVar": 0,
+    "startSpin": 0,
     "startSpinVar": 0,
-    "endSpin": -47.369998931884766,
-    "endSpinVar": -142.11000061035156,
+    "endSpin": -47.369999,
+    "endSpinVar": -142.110001,
     "emitterMode": 0,
     "gravity": {
-      "x": 0.25,
-      "y": 0.8600000143051147
+      "x": 0,
+      "y": 0
     },
     "speed": 0,
-    "speedVar": 190.7899932861328,
-    "radialAccel": -671.0499877929688,
-    "radialAccelVar": 65.79000091552734,
-    "tangentialAccel": -92.11000061035156,
-    "tangentialAccelVar": 65.79000091552734,
+    "speedVar": 0,
+    "radialAccel": 8,
+    "radialAccelVar": 0,
+    "tangentialAccel": 0,
+    "tangentialAccelVar": 0,
     "rotationIsDir": false,
     "startRadius": 0,
     "startRadiusVar": 0,
@@ -65,6 +65,6 @@
     "endRadiusVar": 0,
     "rotatePerS": 0,
     "rotatePerSVar": 0,
-    "spriteFrameUuid": "24c419ea-63a8-4ea1-a9d0-7fc469489bbc@f9941"
+    "spriteFrameUuid": "08d21eb8-82f7-4c3e-841b-fb5c45dfd57b@f9941"
   }
 }

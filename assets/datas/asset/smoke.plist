@@ -3,9 +3,9 @@
 <plist version="1.0">
   <dict>
     <key>angle</key>
-    <integer>360</integer>
+    <integer>0</integer>
     <key>angleVariance</key>
-    <integer>360</integer>
+    <integer>0</integer>
     <key>blendFuncDestination</key>
     <integer>1</integer>
     <key>blendFuncSource</key>
@@ -15,31 +15,31 @@
     <key>emitterType</key>
     <integer>0</integer>
     <key>finishColorAlpha</key>
-    <real>0.8392156862745098</real>
+    <integer>1</integer>
     <key>finishColorBlue</key>
-    <real>0.07450980392156863</real>
+    <integer>0</integer>
     <key>finishColorGreen</key>
-    <real>0.6313725490196078</real>
+    <integer>0</integer>
     <key>finishColorRed</key>
-    <real>0.6784313725490196</real>
+    <integer>0</integer>
     <key>finishColorVarianceAlpha</key>
-    <real>0.7372549019607844</real>
+    <integer>1</integer>
     <key>finishColorVarianceBlue</key>
-    <real>0.9764705882352941</real>
+    <integer>0</integer>
     <key>finishColorVarianceGreen</key>
-    <real>0.9764705882352941</real>
+    <integer>0</integer>
     <key>finishColorVarianceRed</key>
-    <real>0.4196078431372549</real>
+    <integer>0</integer>
     <key>finishParticleSize</key>
-    <real>30.31999969482422</real>
+    <integer>3</integer>
     <key>finishParticleSizeVariance</key>
     <integer>0</integer>
     <key>gravityx</key>
-    <real>0.25</real>
+    <integer>0</integer>
     <key>gravityy</key>
-    <real>0.8600000143051147</real>
+    <integer>0</integer>
     <key>maxParticles</key>
-    <integer>200</integer>
+    <integer>10</integer>
     <key>maxRadius</key>
     <integer>0</integer>
     <key>maxRadiusVariance</key>
@@ -51,25 +51,25 @@
     <key>particleLifespanVariance</key>
     <real>0.5</real>
     <key>radialAccelVariance</key>
-    <real>65.79000091552734</real>
+    <integer>0</integer>
     <key>radialAcceleration</key>
-    <real>-671.0499877929688</real>
+    <integer>8</integer>
     <key>rotatePerSecond</key>
     <integer>0</integer>
     <key>rotatePerSecondVariance</key>
     <integer>0</integer>
     <key>rotationEnd</key>
-    <real>-47.369998931884766</real>
+    <real>-47.369999</real>
     <key>rotationEndVariance</key>
-    <real>-142.11000061035156</real>
+    <real>-142.110001</real>
     <key>rotationStart</key>
-    <real>-47.369998931884766</real>
+    <integer>0</integer>
     <key>rotationStartVariance</key>
     <integer>0</integer>
     <key>sourcePositionVariancex</key>
-    <integer>7</integer>
+    <real>0.5</real>
     <key>sourcePositionVariancey</key>
-    <integer>7</integer>
+    <real>0.5</real>
     <key>sourcePositionx</key>
     <real>373.7277526855469</real>
     <key>sourcePositiony</key>
@@ -77,31 +77,31 @@
     <key>speed</key>
     <integer>0</integer>
     <key>speedVariance</key>
-    <real>190.7899932861328</real>
+    <integer>0</integer>
     <key>startColorAlpha</key>
-    <real>0.6392156862745098</real>
-    <key>startColorBlue</key>
-    <real>0.33725490196078434</real>
-    <key>startColorGreen</key>
-    <real>0.7843137254901961</real>
-    <key>startColorRed</key>
-    <real>0.792156862745098</real>
-    <key>startColorVarianceAlpha</key>
-    <real>0.7764705882352941</real>
-    <key>startColorVarianceBlue</key>
-    <real>0.6784313725490196</real>
-    <key>startColorVarianceGreen</key>
     <integer>1</integer>
+    <key>startColorBlue</key>
+    <integer>1</integer>
+    <key>startColorGreen</key>
+    <integer>1</integer>
+    <key>startColorRed</key>
+    <integer>1</integer>
+    <key>startColorVarianceAlpha</key>
+    <integer>1</integer>
+    <key>startColorVarianceBlue</key>
+    <integer>0</integer>
+    <key>startColorVarianceGreen</key>
+    <integer>0</integer>
     <key>startColorVarianceRed</key>
-    <real>0.8980392156862745</real>
+    <integer>0</integer>
     <key>startParticleSize</key>
-    <real>3.369999885559082</real>
+    <integer>0</integer>
     <key>startParticleSizeVariance</key>
-    <integer>50</integer>
+    <integer>0</integer>
     <key>tangentialAccelVariance</key>
-    <real>65.79000091552734</real>
+    <integer>0</integer>
     <key>tangentialAcceleration</key>
-    <real>-92.11000061035156</real>
+    <integer>0</integer>
     <key>positionType</key>
     <integer>0</integer>
     <key>rotationIsDir</key>
@@ -109,8 +109,8 @@
     <key>minRadiusVariance</key>
     <integer>0</integer>
     <key>emissionRate</key>
-    <real>999.999985098839</real>
+    <integer>1000</integer>
     <key>spriteFrameUuid</key>
-    <string>24c419ea-63a8-4ea1-a9d0-7fc469489bbc@f9941</string>
+    <string>08d21eb8-82f7-4c3e-841b-fb5c45dfd57b@f9941</string>
   </dict>
 </plist>

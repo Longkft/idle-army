@@ -64,9 +64,8 @@ export class Main2D extends Component {
                 // unLock function order gun
                 if (!collider.node.getComponent(Status).isBox) {
 
-                    this.setDataGun(name); // add data gun vào listGun
-
                     if (name == '2' || name == '3') {
+                        this.setDataGun(name); // add data gun vào listGun
                         this.unLockBoxGun(nodeFocus); // mở thùng
                     }
 

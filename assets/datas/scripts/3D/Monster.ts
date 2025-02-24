@@ -1,4 +1,4 @@
-import { _decorator, Component, log, Node, ProgressBar, Vec3, Animation } from 'cc';
+import { _decorator, Component, log, Node, ProgressBar, Vec3, Animation, UITransform, tween, Tween } from 'cc';
 import { Customer } from './Customer';
 import { GameLogic } from '../GameLogic';
 import { Req } from '../Req';
@@ -25,10 +25,20 @@ export class Monster extends Component {
 
     isHaveCusomerAttack: boolean = false; // Kiểm soát việc chọn target mới
 
+    bullet: Node = null;
+    posDefault: Vec3 = new Vec3();
+
+    private bulletTween: Tween<Node> | null = null;
+
     start() {
         log("Monster đã sẵn sàng tấn công!");
 
         this.cpnGameLogic = this.gameLogic.getComponent(GameLogic);
+
+        this.bullet = this.node.getChildByName('Bullet');
+        this.posDefault = this.bullet.position.clone();
+
+        this.bullet.active = false;
     }
 
     update() {
@@ -75,6 +85,9 @@ export class Monster extends Component {
         log(`Monster tấn công ${this.currentTarget.node.name}`);
 
         Req.instance.setAnimation(this.node, MonsterClip.ATTACK3);
+
+        this.bulletRun(); // bắn đạn
+
         this.scheduleOnce(() => {
             if (this.currentTarget) {
 
@@ -102,22 +115,62 @@ export class Monster extends Component {
         }
     }
 
+    bulletRun(){
+        log('bulletRun')
+
+        this.bullet.active = true;
+        this.bullet.position = this.posDefault.clone();
+        this.tweenBullet(this.bullet);
+    }
+
+    tweenBullet(bullet: Node){
+        log('tweenBullet')
+
+        log('posDefault: ', this.posDefault)
+
+        let posNodeCustom = this.currentTarget.node.worldPosition.clone();
+        let posNodeParent = this.node.getComponent(UITransform).convertToNodeSpaceAR(posNodeCustom);
+
+        this.cpnGameLogic.setUpdateLookAt(this.currentTarget.node, bullet);
+
+        // Dừng tween cũ nếu tồn tại
+        if (this.bulletTween) {
+            this.bulletTween.stop();
+        }
+
+        this.bulletTween = tween(bullet)
+        .to(1.3, {position: posNodeParent})
+        .call(()=>{
+            log('tweenBullet call')
+            bullet.active = false;
+            bullet.position =this.posDefault.clone();
+
+            this.bulletTween = null;
+        })
+        .start();
+    }
+
     // Monster nhận sát thương từ Customer
+    isReceiveDame: boolean = false;
     takeDamage(damage: number, name: string) {
-        this.hp -= damage;
+        this.hp -= (0.5 * damage);
 
         let hpUI = this.node.getChildByName('ProgressBar').getComponent(ProgressBar);
-        hpUI.progress -= damage * 0.01;
+        hpUI.progress -= damage * 0.005;
         log(`Monster bị tấn công! Mất ${damage} HP, còn lại: ${this.hp}`);
         log(`${name} tấn công`);
 
-        this.node.getChildByName('anim').active = true;
-        const animNode = this.node.getChildByName('anim').getComponent(Animation);
-        animNode.play();
-        animNode.once(Animation.EventType.FINISHED, () => {
-            animNode.stop(); // Dừng animation
-            this.node.getChildByName('anim').active = false;
-        })
+        if(!this.isReceiveDame){
+            this.isReceiveDame = true;
+            this.node.getChildByName('anim').active = true;
+            const animNode = this.node.getChildByName('anim').getComponent(Animation);
+            animNode.play();
+            animNode.once(Animation.EventType.FINISHED, () => {
+                animNode.stop(); // Dừng animation
+                this.node.getChildByName('anim').active = false;
+                this.isReceiveDame = false;
+            })
+        }
 
         if (this.hp <= 0) {
             this.die();
