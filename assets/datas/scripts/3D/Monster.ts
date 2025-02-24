@@ -1,16 +1,18 @@
-import { _decorator, Component, log, Node, ProgressBar, Vec3 } from 'cc';
+import { _decorator, Component, log, Node, ProgressBar, Vec3, Animation } from 'cc';
 import { Customer } from './Customer';
 import { GameLogic } from '../GameLogic';
+import { Req } from '../Req';
+import { MonsterClip } from '../TagEnums';
 const { ccclass, property } = _decorator;
 
 @ccclass('Monster')
 export class Monster extends Component {
 
-    @property({type: [Node]})
+    @property({ type: [Node] })
     customers: Node[] = [];
 
-    @property({type: Node})
-    gameLogic :Node = null;
+    @property({ type: Node })
+    gameLogic: Node = null;
 
     cpnGameLogic: GameLogic = null;
 
@@ -45,6 +47,9 @@ export class Monster extends Component {
 
         if (aliveCustomers.length === 0) {
             log("Không còn customer nào sống! Monster ngừng đánh.");
+
+            Req.instance.setAnimation(this.node, MonsterClip.IDLE, true);
+
             this.currentTarget = null;
             return;
         }
@@ -52,12 +57,14 @@ export class Monster extends Component {
         let randomIndex = Math.floor(Math.random() * aliveCustomers.length);
         this.currentTarget = aliveCustomers[randomIndex];
 
+        this.cpnGameLogic.setUpdateLookAt(this.currentTarget.node, this.node);
+
         log(`Monster chọn ${this.currentTarget.node.name} để tấn công`);
         this.isAttacking = true;
         this.attackCustomer();
     }
 
-    // 🔥 Monster tấn công Customer mỗi 2s
+    // 🔥 Monster tấn công Customer mỗi 1s
     attackCustomer() {
         if (!this.currentTarget || !this.currentTarget.isAlive) {
             log("Target chết hoặc không tồn tại, dừng tấn công.");
@@ -66,12 +73,17 @@ export class Monster extends Component {
         }
 
         log(`Monster tấn công ${this.currentTarget.node.name}`);
+
+        Req.instance.setAnimation(this.node, MonsterClip.ATTACK3);
         this.scheduleOnce(() => {
             if (this.currentTarget) {
+
+                Req.instance.setAnimation(this.node, MonsterClip.ATTACK3);
+
                 this.currentTarget.takeDamage(this.dame);
                 this.checkTargetStatus();
             }
-        }, 1);
+        }, 1.3);
     }
 
     // Kiểm tra nếu Customer chết, chọn mục tiêu mới
@@ -82,45 +94,12 @@ export class Monster extends Component {
             this.isHaveCusomerAttack = true; // Kích hoạt lại việc tìm target mới
 
             // sau khi customer chết thì khôi phục trạng thái và dữ liệu của array
-            this.restoreDataAndStatus(this.currentTarget.node);
+            // this.restoreDataAndStatus(this.currentTarget.node);
 
             this.currentTarget = null;
         } else {
             this.attackCustomer(); // Tiếp tục tấn công nếu target chưa chết
         }
-    }
-
-    // sau khi customer chết thì khôi phục trạng thái và dữ liệu của array
-    restoreDataAndStatus(customer: Node){
-        let posDefault = new Vec3(-5, 0, -10);
-
-        // restore data
-        this.cpnGameLogic.customers.push(customer); // add lại customer vào mảng customer
-        let cpnCustomer = customer.getComponent(Customer);
-
-        log('cpnCustomer.posDefaulData: ',cpnCustomer.posDefaulData)
-
-        this.cpnGameLogic.availablePositionsMonster.push(cpnCustomer.posDefaulData); // add lại vị trí đứng ở monster
-
-        cpnCustomer.hp = 10;
-        cpnCustomer.weapon = 1;
-        cpnCustomer.dame = 1;
-        // cpnCustomer.posDefaulData = new Vec3(0,0,0);
-        cpnCustomer.dataGun = 0;
-        cpnCustomer.lifeCicle = false;
-        cpnCustomer.isAlive = false;
-        cpnCustomer.isBan = false;
-
-        // restore position
-        customer.worldPosition = posDefault;
-        let progressBar = customer.getChildByName('ProgressBar');
-        progressBar.active = false;
-        progressBar.getComponent(ProgressBar).progress = 1;
-
-        customer.getChildByPath('Chatbox/2').active = false;
-        customer.getChildByPath('Chatbox/3').active = false;
-        customer.getChildByName('2').active = false;
-        customer.getChildByName('3').active = false;
     }
 
     // Monster nhận sát thương từ Customer
@@ -131,6 +110,14 @@ export class Monster extends Component {
         hpUI.progress -= damage * 0.01;
         log(`Monster bị tấn công! Mất ${damage} HP, còn lại: ${this.hp}`);
         log(`${name} tấn công`);
+
+        this.node.getChildByName('anim').active = true;
+        const animNode = this.node.getChildByName('anim').getComponent(Animation);
+        animNode.play();
+        animNode.once(Animation.EventType.FINISHED, () => {
+            animNode.stop(); // Dừng animation
+            this.node.getChildByName('anim').active = false;
+        })
 
         if (this.hp <= 0) {
             this.die();
@@ -144,12 +131,6 @@ export class Monster extends Component {
         this.hp = 100;
         let hpUI = this.node.getChildByName('ProgressBar').getComponent(ProgressBar);
         hpUI.progress = 1;
-    }
-
-    // Nếu Customer chết, chọn mục tiêu khác
-    onCustomerDied(customerNode: Node) {
-        log(`Monster nhận thông báo: ${customerNode.name} đã chết`);
-        this.isHaveCusomerAttack = true;
     }
 }
 

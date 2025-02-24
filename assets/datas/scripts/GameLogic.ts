@@ -56,6 +56,8 @@ export class GameLogic extends Component {
 
     private isProcessing: boolean = false; // Biến kiểm soát gọi checkGunIsCustom()
 
+    timeAttack: number = 0;
+
     // mở thùng -> chạy đến order cho customer -> load customer -> chạy về order súng -> load súng -> lấy súng chạy đưa cho customer -> customer chạy đến monster và bắn;
     //                                                              
 
@@ -79,12 +81,12 @@ export class GameLogic extends Component {
     // tìm xem có life cicle nào đang true không
     searchLifeCicle() {
         if (this.isProcessing) return; // Nếu đã xử lý, không làm gì nữa
-    
+
         let hasActiveLifeCycle = this.customersAtPositions.some(customer => {
             let cpnCustomer = customer.getComponent(Customer);
             return cpnCustomer && cpnCustomer.lifeCicle;
         });
-    
+
         if (!hasActiveLifeCycle) {
             this.isProcessing = true; // Đánh dấu đang xử lý
             this.checkGunIsCustom();
@@ -161,10 +163,20 @@ export class GameLogic extends Component {
                 Req.instance.dataGunFocus = this.main2D.setRandomDataGun(); // lấy ramdom data của 1 loại súng
                 this.setBoxGun();// cài đặt biến this.gun
 
-                // this.tweenStaffOrderGun();
+                this.getCustomerFor() // kiểm tra slot trống trước khi bắt đầu xử lý customer
+            }
+        }
+    }
 
+    // check điều kiện để lấy customer
+    isFullPositionMonster: boolean = false;
+    getCustomerFor() {
+        if (!this.isFullPositionMonster) {
+            if (this.availablePositionsMonster.length > 0) {
                 this.getCustomerShift();
             }
+        } else {
+            console.log("Không còn slot gần monster, chờ slot trống...");
         }
     }
 
@@ -173,14 +185,16 @@ export class GameLogic extends Component {
         switch (Req.instance.dataGunFocus) {
             case 2: {
                 this.gun = this.mapObj.getChildByName('Pistol');
-                this.dataCustomAttack.attackCustomer = CustomerClip.ATTACK2; 
+                this.dataCustomAttack.attackCustomer = CustomerClip.ATTACK2;
                 this.positionXOrder = 0.75; // giá trị thêm vào để staff đứng để order súng
+                this.timeAttack = 2.5;
             }
-            break;
+                break;
             case 3: {
                 this.gun = this.mapObj.getChildByName('Rifle');
                 this.dataCustomAttack.attackCustomer = CustomerClip.ATTACK3;
                 this.positionXOrder = - 0.75;
+                this.timeAttack = 0.000001;
             }
                 break;
         }
@@ -190,7 +204,7 @@ export class GameLogic extends Component {
     posStaffRunToCustom: Vec3; // vị trí staff đứng gặp customer
     getCustomerShift() {
         let custom = this.customersAtPositions.shift();
-        if(!custom) return;
+        if (!custom) return;
 
         let cpnCustomer = custom.getComponent(Customer);
         cpnCustomer.lifeCicle = true; // cài đặt vòng đời của customer
@@ -277,13 +291,13 @@ export class GameLogic extends Component {
     }
 
     // kiểm tra điều kiện mở box súng mới
-    checkConditionUnLockBoxGun(countCustomer: number){
+    checkConditionUnLockBoxGun(countCustomer: number) {
         switch (countCustomer) {
-            case 3:{
+            case 3: {
                 this.gun3.active = true;
             }
                 break;
-            case 8:{
+            case 8: {
                 this.gun4.active = true;
             }
                 break;
@@ -397,7 +411,7 @@ export class GameLogic extends Component {
         this.monster.getComponent(Monster).customers = this.customersAtPositionsMonster; // gán danh sách customer đang đánh monster
 
         this.moveNextCustomer(); // di chuyển thêm customer mới vào vị trí trống
-        
+
         // log('this.customersAtPositions: ',this.customersAtPositions);
         // log('this.customersAtPositionsMonster: ',this.customersAtPositionsMonster);
     }
@@ -406,24 +420,28 @@ export class GameLogic extends Component {
     getRandomPositionMonster(): Vec3 | null {
         if (this.availablePositionsMonster.length === 0) {
             error("availablePositionsMonster trống. Không thể chọn vị trí ngẫu nhiên.");
+
+            // Phân bổ và di chuyển các customer
+            // this.moveNextCustomer();
+
             return null;
         }
-    
+
         // Tạo một bản sao của mảng vị trí để không ảnh hưởng đến mảng gốc
         let availablePositionsClone = [...this.availablePositionsMonster];
-    
+
         while (availablePositionsClone.length > 0) {
             const randomIndex = Math.floor(Math.random() * availablePositionsClone.length);
             const randomPosition = availablePositionsClone[randomIndex];
-    
+
             // Kiểm tra xem có khách hàng nào đang đứng tại vị trí này không (dùng khoảng cách)
             const isOccupied = this.customersAtPositions.some(customer =>
                 Vec3.distance(customer.position, randomPosition) < 0.1
             );
-    
+
             if (!isOccupied) {
                 // log(`Vị trí ngẫu nhiên được chọn: ${randomPosition}`);
-    
+
                 // Xóa vị trí đã chọn khỏi availablePositionsMonster để tránh bị chọn lại
                 this.availablePositionsMonster = this.availablePositionsMonster.filter(pos =>
                     Vec3.distance(pos, randomPosition) >= 0.1
@@ -431,17 +449,17 @@ export class GameLogic extends Component {
 
                 return randomPosition;
             }
-    
+
             // Nếu vị trí đã có người, loại bỏ nó khỏi danh sách tạm thời và thử lại
             availablePositionsClone.splice(randomIndex, 1);
         }
-    
+
         log("Không tìm thấy vị trí trống cho khách hàng mới.");
         return null;
     }
 
     // customer chạy đến monster
-    customerRunAttackMonster(){
+    customerRunAttackMonster() {
         let posCustomerStandNearMonster = this.getRandomPositionMonster(); // lấy vị trí để custom đi đến bắn monster
         this.dataCustomFocus.customer.getComponent(Customer).posDefaulData = posCustomerStandNearMonster;
 
@@ -451,54 +469,54 @@ export class GameLogic extends Component {
     // cài đặt customer hướng về monster
     public lookAtOffset: Vec3 = new Vec3(0, 0, 0);
     private tempVec3: Vec3 = new Vec3();
-    setUpdateLookAt(targetNode: any, nodeVector: Node) {
+    setUpdateLookAt(targetNode: Node, nodeVector: Node) {
         if (!targetNode || !nodeVector) return;
-    
+
         let targetNodePosition = targetNode.worldPosition.clone();
         let nodeVectorPosition = nodeVector.worldPosition.clone();
-    
+
         // Tính toán vector hướng từ targetNode đến monster
         let direction = new Vec3();
         Vec3.subtract(direction, targetNodePosition, nodeVectorPosition);
-        
+
         // Sử dụng lookAt để quay mặt về phía monster
         nodeVector.lookAt(targetNodePosition);
-    
+
         // xoay thêm 180 độ quanh trục Y vì ngược hướng
         let rotationFix = new Quat();
         Quat.fromEuler(rotationFix, 0, 180, 0); // Xoay 180 độ quanh trục Y
         nodeVector.rotate(rotationFix);
-    
+
         // log(`targetNode hướng về nodeVector từ vị trí ${nodeVectorPosition} đến ${targetNodePosition}`);
     }
 
     // customer run monster
-    tweenCustomerRunMonster(posCustomerStandNearMonster: Vec3){
+    tweenCustomerRunMonster(posCustomerStandNearMonster: Vec3) {
         let customer = this.dataCustomFocus.customer;
         Req.instance.setAnimation(customer, CustomerClip.MOVE, true);
-        
+
         this.setUpdateLookAt(this.monster, customer); // customer hướng về lookAt
 
         let attack = this.dataCustomAttack.attackCustomer; // lấy anim bắn súng
-        
+
         let eff = tween(customer)
-        .to(1, {position: posCustomerStandNearMonster})
-        .call(()=>{
-            Req.instance.setAnimation(customer, CustomerClip.IDLE, true);
+            .to(1, { position: posCustomerStandNearMonster })
+            .call(() => {
+                Req.instance.setAnimation(customer, CustomerClip.IDLE, true);
 
-            this.dataCustomAttack.customerAttack = customer;
-            
-            this.customerAttackMonter(attack); // cài đặt anim bắn súng
+                this.dataCustomAttack.customerAttack = customer;
 
-            this.setUpdateLookAt(this.monster, customer); // customer hướng về lookAt
+                this.customerAttackMonter(attack); // cài đặt anim bắn súng
 
-            this.customerActiveHp();
-        })
-        .start();
+                this.setUpdateLookAt(this.monster, customer); // customer hướng về lookAt
+
+                this.customerActiveHp();
+            })
+            .start();
     }
 
     // kích hoạt máu và cầm súng
-    customerActiveHp(){
+    customerActiveHp() {
         let custom = this.dataCustomAttack.customerAttack;
 
         let hp = custom.getChildByName('ProgressBar');
@@ -511,10 +529,12 @@ export class GameLogic extends Component {
     }
 
 
-    
+
     // customer tấn công monster
-    customerAttackMonter(anim: any){
+    customerAttackMonter(anim: any) {
         let customer = this.dataCustomAttack.customerAttack;
+
+        log('this.timeAttack: ', this.timeAttack)
 
         Req.instance.setAnimation(customer, anim, true);
 

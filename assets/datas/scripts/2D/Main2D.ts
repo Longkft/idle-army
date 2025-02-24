@@ -66,7 +66,13 @@ export class Main2D extends Component {
 
                     this.setDataGun(name); // add data gun vào listGun
 
-                    this.unLockBoxGun(nodeFocus); // mở thùng
+                    if (name == '2' || name == '3') {
+                        this.unLockBoxGun(nodeFocus); // mở thùng
+                    }
+
+                    if (name == '4') {
+                        // end Game
+                    }
                 }
             }
         }
@@ -117,7 +123,7 @@ export class Main2D extends Component {
                     Req.instance.lifeCycle = true;
                 }
 
-                if(!this.isFirstOnBoxGun){
+                if (!this.isFirstOnBoxGun) {
                     this.isFirstOnBoxGun = true
                     this.gameLogic.checkGunIsCustom();
                 }

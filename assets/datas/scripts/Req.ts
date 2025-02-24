@@ -112,11 +112,13 @@ export class Req extends Component {
 
         skeletalAnimation.defaultClip = clips[tagNumber];
 
+        // Lấy thời gian của animation
+        let animationDuration = skeletalAnimation.defaultClip.duration;
+        log(`animationDuration ${node.name}: `, animationDuration, skeletalAnimation.defaultClip.name)
+
         if (loop) {
             // Thêm listener cho sự kiện FINISHED
-            skeletalAnimation.on(AnimationComponent.EventType.FINISHED, () => {
-                log('loop')
-                console.log('Animation finished, playing again');
+            skeletalAnimation.on(AnimationComponent.EventType.LASTFRAME, () => {
                 skeletalAnimation.play();
             }, this);
         } else {
