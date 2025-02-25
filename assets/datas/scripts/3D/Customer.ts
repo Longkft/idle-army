@@ -1,5 +1,5 @@
 import { _decorator, Component, log, Node, ProgressBar, Vec3, Animation, ParticleSystem2D, tween, UITransform, Tween } from 'cc';
-import { CustomerClip, Weapon } from '../TagEnums';
+import { CustomerClip, Musics, Weapon } from '../TagEnums';
 import { Monster } from './Monster';
 import { GameLogic } from '../GameLogic';
 import { Req } from '../Req';
@@ -83,6 +83,9 @@ export class Customer extends Component {
 
         // Gây sát thương lên monster nếu tồn tại
         if (this.monster) {
+
+            Req.instance.playAudio(this.node, this.cpnGameLogic.musics[Musics.GUN]); // bật âm thanh súng
+
             this.bulletRun(); // Bắn đạn mỗi lần tấn công
             let monsterComponent = this.monster.getComponent(Monster);
             if (monsterComponent) {
@@ -91,7 +94,7 @@ export class Customer extends Component {
         }
     }
 
-    bulletRun(){
+    bulletRun() {
         log('bulletRun')
 
         this.bullet.active = true;
@@ -99,7 +102,7 @@ export class Customer extends Component {
         this.tweenBullet(this.bullet);
     }
 
-    tweenBullet(bullet: Node){
+    tweenBullet(bullet: Node) {
         log('tweenBullet')
 
         log('posDefault: ', this.posDefault)
@@ -115,15 +118,15 @@ export class Customer extends Component {
         }
 
         this.bulletTween = tween(bullet)
-        .to(4 / this.dataGun, {position: posNodeParent})
-        .call(()=>{
-            log('tweenBullet call')
-            bullet.active = false;
-            bullet.position =this.posDefault.clone();
+            .to(2 / this.dataGun, { position: posNodeParent })
+            .call(() => {
+                log('tweenBullet call')
+                bullet.active = false;
+                bullet.position = this.posDefault.clone();
 
-            this.bulletTween = null;
-        })
-        .start();
+                this.bulletTween = null;
+            })
+            .start();
     }
 
     takeDamage(damage: number) {
@@ -164,6 +167,8 @@ export class Customer extends Component {
 
     die() {
         this.isAlive = false;
+
+        this.unschedule(this.scheduAttack); // Hủy lịch bắn khi chết
         log(`${this.node.name} đã chết!`);
 
         this.node.active = false; // Ẩn customer khi chết

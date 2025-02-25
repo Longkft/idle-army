@@ -1,9 +1,10 @@
-import { _decorator, AudioClip, Camera, Component, error, log, Node, Quat, SkeletalAnimation, Sprite, tween, Vec3 } from 'cc';
+import { _decorator, AudioClip, AudioSource, Camera, Component, error, log, Node, Quat, SkeletalAnimation, Sprite, tween, Vec3, view } from 'cc';
 import { Req } from './Req';
-import { CustomerClip, MonsterClip, StaffClip } from './TagEnums';
+import { CustomerClip, MonsterClip, Musics, StaffClip } from './TagEnums';
 import { Main2D } from './2D/Main2D';
 import { Customer } from './3D/Customer';
 import { Monster } from './3D/Monster';
+import super_html_playable from './super_html_playable';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameLogic')
@@ -58,6 +59,9 @@ export class GameLogic extends Component {
 
     timeAttack: number = 0;
 
+    positionCamera3DInit: Vec3;
+    rotationCamera3DInit: Quat; // Góc xoay ban đầu
+
     // mở thùng -> chạy đến order cho customer -> load customer -> chạy về order súng -> load súng -> lấy súng chạy đưa cho customer -> customer chạy đến monster và bắn;
     //                                                              
 
@@ -65,6 +69,8 @@ export class GameLogic extends Component {
         this.main2D = this.nodeMain2D.getComponent(Main2D);
 
         this.initPositionStaff = this.staff.worldPosition.clone();
+        this.positionCamera3DInit = this.cam3D.node.worldPosition.clone();
+        this.rotationCamera3DInit = this.cam3D.node.worldRotation.clone();
     }
 
     start() {
@@ -72,6 +78,31 @@ export class GameLogic extends Component {
 
         Req.instance.setAnimation(this.staff, StaffClip.IDLE, true);
         Req.instance.setAnimation(this.monster, MonsterClip.IDLE, true);
+
+        view.on("canvas-resize", () => {
+            this.resize();
+        });
+        this.resize();
+    }
+
+    resize() {
+        const screenSize = view.getVisibleSize();
+
+        let width = screenSize.width;
+        let height = screenSize.height;
+        let ratio = width / height;
+        log(ratio)
+
+        if (width < height) {
+            this.cam3D.node.worldPosition = this.positionCamera3DInit;
+            this.cam3D.node.worldRotation = this.rotationCamera3DInit;
+        } else {
+            this.cam3D.node.worldPosition = new Vec3(0, 20, 10);
+
+            const newRotation = new Quat();
+            Quat.fromEuler(newRotation, -50, 0, 0); // Xoay -45 độ quanh trục X (nhìn xuống)
+            this.cam3D.node.worldRotation = newRotation;
+        }
     }
 
     update(deltaTime: number) {
@@ -187,7 +218,7 @@ export class GameLogic extends Component {
                 this.gun = this.mapObj.getChildByName('Pistol');
                 this.dataCustomAttack.attackCustomer = CustomerClip.ATTACK2;
                 this.positionXOrder = 0.75; // giá trị thêm vào để staff đứng để order súng
-                this.timeAttack = 2.5;
+                this.timeAttack = 2;
             }
                 break;
             case 3: {
@@ -280,6 +311,8 @@ export class GameLogic extends Component {
                     this.activeGunCustomerThink(customer); // hiển thị súng mà customer muốn và hiện ra màn hình
 
                     this.tweenStaffOrderGun();
+
+                    Req.instance.playAudio(this.node, this.musics[Musics.FINISHEDORDER]); // bật âm thanh súng
                 }
             }
         }
@@ -295,6 +328,10 @@ export class GameLogic extends Component {
         switch (countCustomer) {
             case 3: {
                 this.gun3.active = true;
+            }
+                break;
+            case 5: {
+                this.main2D.getComponent(Main2D).endGame();
             }
                 break;
             case 8: {
@@ -365,6 +402,8 @@ export class GameLogic extends Component {
                     this.offProgressCicle(progressCicle); // tắt cicle bar thùng súng
 
                     this.staffGetGunRunCustomer();
+
+                    Req.instance.playAudio(this.node, this.musics[Musics.FINISHEDORDER]); // bật âm thanh súng
                 }
             }
         }
@@ -388,6 +427,8 @@ export class GameLogic extends Component {
                 this.offBoxChatGun(); // tắt box chat súng của customer
 
                 this.customerRunAttackMonster(); // customer chạy đến monster
+
+                Req.instance.playAudio(this.node, this.musics[Musics.FINISHEDORDER]); // bật âm thanh súng
             })
             .start();
     }
@@ -534,7 +575,7 @@ export class GameLogic extends Component {
 
         log('this.timeAttack: ', this.timeAttack)
 
-        Req.instance.setAnimation(customer, anim, true);
+        Req.instance.setAnimation(customer, anim, true, this.timeAttack);
 
         Req.instance.lifeCycle = true;
 
@@ -542,5 +583,8 @@ export class GameLogic extends Component {
         this.monster.getComponent(Monster).isHaveCusomerAttack = true;
     }
 
+    EventNetWork() {
+        super_html_playable.game_end();
+    }
 }
 

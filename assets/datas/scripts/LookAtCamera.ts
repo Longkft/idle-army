@@ -17,13 +17,19 @@ export class LookAtCamera extends Component {
 
     lateUpdate(dt: number) {
         if (this.camera) {
+            // // Lấy vị trí của camera
+            // Vec3.copy(this._lookAtPos, this.camera.node.worldPosition);
+
+            // // Đặt y bằng với y của item để chỉ xoay theo trục y
+            // this._lookAtPos.y = this.node.worldPosition.y;
+
+            // // Hướng item về phía camera
+            // this.node.lookAt(this._lookAtPos);
+
             // Lấy vị trí của camera
             Vec3.copy(this._lookAtPos, this.camera.node.worldPosition);
 
-            // Đặt y bằng với y của item để chỉ xoay theo trục y
-            this._lookAtPos.y = this.node.worldPosition.y;
-
-            // Hướng item về phía camera
+            // Hướng node về phía camera (nhìn trực diện)
             this.node.lookAt(this._lookAtPos);
         }
     }

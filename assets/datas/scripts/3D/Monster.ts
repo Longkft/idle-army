@@ -115,7 +115,7 @@ export class Monster extends Component {
         }
     }
 
-    bulletRun(){
+    bulletRun() {
         log('bulletRun')
 
         this.bullet.active = true;
@@ -123,7 +123,7 @@ export class Monster extends Component {
         this.tweenBullet(this.bullet);
     }
 
-    tweenBullet(bullet: Node){
+    tweenBullet(bullet: Node) {
         log('tweenBullet')
 
         log('posDefault: ', this.posDefault)
@@ -139,15 +139,15 @@ export class Monster extends Component {
         }
 
         this.bulletTween = tween(bullet)
-        .to(1.3, {position: posNodeParent})
-        .call(()=>{
-            log('tweenBullet call')
-            bullet.active = false;
-            bullet.position =this.posDefault.clone();
+            .to(1.3, { position: posNodeParent })
+            .call(() => {
+                log('tweenBullet call')
+                bullet.active = false;
+                bullet.position = this.posDefault.clone();
 
-            this.bulletTween = null;
-        })
-        .start();
+                this.bulletTween = null;
+            })
+            .start();
     }
 
     // Monster nhận sát thương từ Customer
@@ -160,7 +160,7 @@ export class Monster extends Component {
         log(`Monster bị tấn công! Mất ${damage} HP, còn lại: ${this.hp}`);
         log(`${name} tấn công`);
 
-        if(!this.isReceiveDame){
+        if (!this.isReceiveDame) {
             this.isReceiveDame = true;
             this.node.getChildByName('anim').active = true;
             const animNode = this.node.getChildByName('anim').getComponent(Animation);

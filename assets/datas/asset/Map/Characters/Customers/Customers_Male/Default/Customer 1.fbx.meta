@@ -108,7 +108,7 @@
       "name": "A Pose.animation",
       "userData": {
         "gltfIndex": 0,
-        "wrapMode": 2,
+        "wrapMode": 1,
         "sample": 30,
         "span": {
           "from": 0,
@@ -131,7 +131,7 @@
       "name": "Attack_1.animation",
       "userData": {
         "gltfIndex": 1,
-        "wrapMode": 2,
+        "wrapMode": 1,
         "sample": 30,
         "span": {
           "from": 0,
@@ -159,7 +159,7 @@
       "name": "Attack_1_Idle.animation",
       "userData": {
         "gltfIndex": 2,
-        "wrapMode": 2,
+        "wrapMode": 1,
         "sample": 30,
         "span": {
           "from": 0,
@@ -182,7 +182,7 @@
       "name": "Attack_2.animation",
       "userData": {
         "gltfIndex": 3,
-        "wrapMode": 2,
+        "wrapMode": 1,
         "sample": 30,
         "span": {
           "from": 0,
@@ -205,7 +205,7 @@
       "name": "Attack_2_Idle.animation",
       "userData": {
         "gltfIndex": 4,
-        "wrapMode": 2,
+        "wrapMode": 1,
         "sample": 30,
         "span": {
           "from": 0,
@@ -228,7 +228,7 @@
       "name": "Attack_3.animation",
       "userData": {
         "gltfIndex": 5,
-        "wrapMode": 2,
+        "wrapMode": 1,
         "sample": 30,
         "span": {
           "from": 0,
@@ -251,7 +251,7 @@
       "name": "Attack_3_Idle.animation",
       "userData": {
         "gltfIndex": 6,
-        "wrapMode": 2,
+        "wrapMode": 1,
         "sample": 30,
         "span": {
           "from": 0,
@@ -297,7 +297,7 @@
       "name": "Move.animation",
       "userData": {
         "gltfIndex": 8,
-        "wrapMode": 2,
+        "wrapMode": 1,
         "sample": 30,
         "span": {
           "from": 0,
@@ -517,7 +517,7 @@
             "name": "A Pose",
             "from": 0,
             "to": 0.03333333507180214,
-            "wrapMode": 2
+            "wrapMode": 1
           }
         ]
       },
@@ -530,7 +530,7 @@
             "name": "Attack_1",
             "from": 0,
             "to": 1.5,
-            "wrapMode": 2
+            "wrapMode": 1
           }
         ]
       },
@@ -543,7 +543,7 @@
             "name": "Attack_1_Idle",
             "from": 0,
             "to": 1.3333333730697632,
-            "wrapMode": 2
+            "wrapMode": 1
           }
         ]
       },
@@ -556,7 +556,7 @@
             "name": "Attack_2",
             "from": 0,
             "to": 1,
-            "wrapMode": 2
+            "wrapMode": 1
           }
         ]
       },
@@ -569,7 +569,7 @@
             "name": "Attack_2_Idle",
             "from": 0,
             "to": 1.3333333730697632,
-            "wrapMode": 2
+            "wrapMode": 1
           }
         ]
       },
@@ -582,7 +582,7 @@
             "name": "Attack_3",
             "from": 0,
             "to": 0.6666666865348816,
-            "wrapMode": 2
+            "wrapMode": 1
           }
         ]
       },
@@ -595,7 +595,7 @@
             "name": "Attack_3_Idle",
             "from": 0,
             "to": 1.3333333730697632,
-            "wrapMode": 2
+            "wrapMode": 1
           }
         ]
       },
@@ -621,7 +621,7 @@
             "name": "Move",
             "from": 0,
             "to": 0.5333333611488342,
-            "wrapMode": 2
+            "wrapMode": 1
           }
         ]
       }

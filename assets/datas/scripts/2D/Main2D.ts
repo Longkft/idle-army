@@ -2,6 +2,8 @@ import { _decorator, Camera, Component, error, geometry, log, Node, PhysicsSyste
 import { Req } from '../Req';
 import { Status } from '../Status';
 import { GameLogic } from '../GameLogic';
+import { Musics } from '../TagEnums';
+import { AdManager } from '../AdManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('Main2D')
@@ -36,7 +38,7 @@ export class Main2D extends Component {
         let temp = t.scene2D.getChildByName("game");
         temp.on(Node.EventType.TOUCH_START, t.onTouchStart, t);
 
-
+        Req.instance.playAudio(this.node, this.gameLogic.musics[Musics.BACKGROUND], true, 0.5); // bật âm thanh nền
     }
 
     onTouchStart(event) {
@@ -71,10 +73,18 @@ export class Main2D extends Component {
 
                     if (name == '4') {
                         // end Game
+
+                        this.endGame();
                     }
                 }
             }
         }
+    }
+
+    endGame() {
+        this.gameLogic.EventNetWork();
+        this.scene2D.getChildByName('AdManager').getComponent(AdManager).openAdUrl();
+        this.scene2D.getChildByName('Button').active = true;
     }
 
     gun: any = null;

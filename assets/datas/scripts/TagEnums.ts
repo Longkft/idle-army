@@ -54,3 +54,10 @@ export enum StaffClip {
     NHAYXUONG = 13,
 }
 
+export enum Musics {
+    BACKGROUND = 0,
+    COIN = 1,
+    FINISHEDORDER = 2,
+    GUN = 3,
+}
+

@@ -77,15 +77,15 @@ export class Req extends Component {
         });
     }
 
-    playAudio(node: Node, audio: AudioClip, loop: string) {
+    playAudio(node: Node, audio: AudioClip, loop: boolean = false, volume: number = 1) {
         let audioSource = node.getComponent(AudioSource);
         if (!audioSource) {
             audioSource = node.addComponent(AudioSource);
         }
         audioSource.clip = audio;
-        audioSource.volume = 1;
+        audioSource.volume = volume;
 
-        if (loop && loop === 'loop') {
+        if (loop) {
             audioSource.node.on(AudioSource.EventType.ENDED, () => {
                 // Bắt đầu phát lại âm thanh
                 audioSource.play();
@@ -97,7 +97,7 @@ export class Req extends Component {
         }
     }
 
-    setAnimation(node: Node, tagNumber: any, loop: boolean = false, callback?: CallableFunction) {
+    setAnimation(node: Node, tagNumber: any, loop: boolean = false, timeDown: number = 0.000001, callback?: CallableFunction) {
         let skeletalAnimation = node.getComponent(SkeletalAnimation);
         if (!skeletalAnimation) {
             console.error("Skeleton component not found on the node");
@@ -116,15 +116,19 @@ export class Req extends Component {
         let animationDuration = skeletalAnimation.defaultClip.duration;
         log(`animationDuration ${node.name}: `, animationDuration, skeletalAnimation.defaultClip.name)
 
+        skeletalAnimation.off(SkeletalAnimation.EventType.FINISHED); // Xóa listener cũ cho.FINISHED
+
         if (loop) {
-            // Thêm listener cho sự kiện FINISHED
-            skeletalAnimation.on(AnimationComponent.EventType.LASTFRAME, () => {
+            skeletalAnimation.on(SkeletalAnimation.EventType.FINISHED, () => {
+                // setTimeout(() => {
                 skeletalAnimation.play();
-            }, this);
-        } else {
-            if (callback) {
+                // }, timeDown * 1000);
+            });
+        } else if (callback) {
+            skeletalAnimation.on(SkeletalAnimation.EventType.FINISHED, () => {
+                log("Last frame reached, calling callback");
                 callback();
-            }
+            });
         }
 
         // Bắt đầu phát animation
